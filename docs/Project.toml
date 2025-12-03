@@ -1,0 +1,6 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+DynamicalModels = "155b56ea-488f-4a64-96b5-1bbed62c0e47"
+
+[sources]
+DynamicalModels = {path = "/workspaces/DynamicalModels.jl"}
