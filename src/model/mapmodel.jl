@@ -1,10 +1,10 @@
 """
     LogisticMap(; r=3.5)
 
-ロジスティック写像 `x_{n+1} = r x_n (1 - x_n)` のパラメータを保持する構造体。
-`f(x)` の形式で `map_solver` に渡すことができます。
+logistic map `x_{n+1} = r x_n (1 - x_n)`
+It can be passed to `map_solver` in the form of `f(x)`.
 
-- `r`: 成長率パラメータ
+- `r`: Growth rate parameter
 """
 @kwdef struct LogisticMap <: AbstractMap{Float64}
     r::Float64 = 3.5
@@ -17,10 +17,10 @@ export LogisticMap
 """
     HenonMap(; a=1.4, b=0.3)
 
-エノン写像のパラメータを保持する構造体。
-`f(x)` の形式で `map_solver` に渡すことができます。
+Abstract type for the Henon map parameters.
+It can be passed to `map_solver` in the form of `f(x)`.
 
-- `a`, `b`: システムパラメータ
+- `a`, `b`: System parameters
 """
 @kwdef struct HenonMap <: AbstractMap{Float64}
     a::Float64 = 1.4
@@ -36,10 +36,11 @@ export HenonMap
 """
     StandardMap(; K=1.0)
 
-標準写像（Chirikov-Taylor map）のパラメータを保持する構造体。
-`f(x)` の形式で `map_solver` に渡すことができます。
+    
+Standard map (Chirikov-Taylor map) parameters.
+It can be passed to `map_solver` in the form of `f(x)`.
 
-- `K`: 非線形性の強さ (カオスパラメータ)
+- `K`: Strength of nonlinearity (chaos parameter)
 """
 @kwdef struct StandardMap <: AbstractMap{Float64}
     K::Float64 = 1.0
@@ -54,11 +55,11 @@ export StandardMap
 """
     CircleMap(; K=1.0, Ω=0.5)
 
-サークル写像のパラメータを保持する構造体。
-`f(x)` の形式で `map_solver` に渡すことができます。
+Circle map parameters.
+It can be passed to `map_solver` in the form of `f(x)`.
 
-- `K`: 非線形性の強さ
-- `Ω`: 周波数比 (Winding number)
+- `K`: Strength of nonlinearity
+- `Ω`: Winding number
 """
 @kwdef struct CircleMap <: AbstractMap{Float64}
     K::Float64 = 1.0
