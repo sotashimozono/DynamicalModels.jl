@@ -22,7 +22,7 @@ using DynamicalModels, Test, Plots
 using FFTW, ForwardDiff
 using LinearAlgebra, Statistics, Random
 
-const dirs = ["model", "solver"]
+const dirs = ["model", "solver", "analysis"]
 
 @testset "tests" begin
     test_args = copy(ARGS)
