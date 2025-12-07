@@ -300,6 +300,6 @@ Use `get_hh_initial_state(model, V0)` to get consistent initial conditions:
 
 ## See Also
 
-- [FitzHugh-Nagumo Model](fitzhugh-nagumo.md) (not yet implemented)
+- FitzHugh-Nagumo Model (not yet implemented)
 - [Van der Pol Oscillator](vanderpol.md) - similar relaxation oscillations
 - [Analysis Tools](../analysis.md)

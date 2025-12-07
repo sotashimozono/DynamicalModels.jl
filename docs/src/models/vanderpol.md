@@ -147,5 +147,4 @@ section = poincare_section(model, x0, plane_normal, plane_point, 1000.0)
 ## See Also
 
 - [Lorenz System](lorenz.md)
-- [Harmonic Oscillator](harmonic.md)
 - [Analysis Tools](../analysis.md)

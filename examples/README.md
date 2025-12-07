@@ -158,9 +158,3 @@ Feel free to add more example scripts demonstrating:
 - Advanced analysis techniques
 - Comparison studies
 - Real-world applications
-
-## References
-
-1. Strogatz, S. H. (2015). "Nonlinear Dynamics and Chaos"
-2. Ott, E. (2002). "Chaos in Dynamical Systems"
-3. Izhikevich, E. M. (2007). "Dynamical Systems in Neuroscience"
