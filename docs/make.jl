@@ -6,7 +6,14 @@ makedocs(
     sitename = "DynamicalModels.jl",
     modules  = [DynamicalModels],
     pages    = [
-        "Home" => "index.md"
+        "Home" => "index.md",
+        "Models" => [
+            "Van der Pol Oscillator" => "models/vanderpol.md",
+            "Lorenz System" => "models/lorenz.md",
+            "Rössler System" => "models/rossler.md",
+            "Hodgkin-Huxley Model" => "models/hodgkin-huxley.md",
+        ],
+        "Analysis Tools" => "analysis.md",
     ]
 )
 
