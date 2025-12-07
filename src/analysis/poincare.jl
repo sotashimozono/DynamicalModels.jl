@@ -42,7 +42,7 @@ function poincare_section(model, x0::AbstractVector{T},
     # Calculate signed distance from plane
     dist_prev = dot(x - plane_point, n)
     
-    n_steps = Int(round(t_max / dt))
+    n_steps = ceil(Int, t_max / dt)
     
     for _ in 1:n_steps
         # RK4 step

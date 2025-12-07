@@ -70,7 +70,8 @@ end
         # Test with known values
         λs_dissipative = [1.0, 0.0, -2.0]
         D_KY = kaplan_yorke_dimension(λs_dissipative)
-        @test D_KY ≈ 2.0 + (1.0 + 0.0) / 2.0  # j=2, sum of first 2 = 1.0, |λ_3| = 2.0
+        expected = 2.5  # j=2, sum of first 2 = 1.0, |λ_3| = 2.0, so 2 + 1.0/2.0 = 2.5
+        @test D_KY ≈ expected
         
         λs_all_negative = [-1.0, -2.0, -3.0]
         D_KY = kaplan_yorke_dimension(λs_all_negative)

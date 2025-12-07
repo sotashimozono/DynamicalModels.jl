@@ -1,3 +1,5 @@
+const PERTURBATION_SIZE = 1e-8
+
 """
     lyapunov_exponent(model, x0, time_step; dt=0.01, warmup=1000, n_iterations=10000)
 
@@ -26,14 +28,14 @@ function lyapunov_exponent(model, x0::AbstractVector{T}, time_step::Real;
     dim = length(x0)
     x = copy(x0)
     δx = randn(T, dim)
-    δx = δx / norm(δx) * 1e-8  # Small perturbation
+    δx = δx / norm(δx) * PERTURBATION_SIZE  # Small perturbation
     
     # Warmup phase
     for _ in 1:warmup
         x, _ = rk4_step(model, 0.0, x, time_step, dt)
         δx_evolved, _ = rk4_step(model, 0.0, x + δx, time_step, dt)
         δx = δx_evolved - x
-        δx = δx / norm(δx) * 1e-8
+        δx = δx / norm(δx) * PERTURBATION_SIZE
     end
     
     # Calculation phase
@@ -44,10 +46,10 @@ function lyapunov_exponent(model, x0::AbstractVector{T}, time_step::Real;
         δx_new = δx_evolved - x_new
         
         d = norm(δx_new)
-        sum_log += log(d / 1e-8)
+        sum_log += log(d / PERTURBATION_SIZE)
         
         x = x_new
-        δx = δx_new / d * 1e-8
+        δx = δx_new / d * PERTURBATION_SIZE
     end
     
     return sum_log / (n_iterations * time_step)
@@ -84,7 +86,7 @@ function lyapunov_spectrum(model, x0::AbstractVector{T}, time_step::Real;
         # Evolve perturbation vectors
         Q_evolved = zeros(T, dim, dim)
         for j in 1:dim
-            Q_evolved[:, j], _ = rk4_step(model, 0.0, x + Q[:, j] * 1e-8, time_step, dt)
+            Q_evolved[:, j], _ = rk4_step(model, 0.0, x + Q[:, j] * PERTURBATION_SIZE, time_step, dt)
             Q_evolved[:, j] = Q_evolved[:, j] - x
         end
         Q, _ = qr(Q_evolved)
@@ -98,7 +100,7 @@ function lyapunov_spectrum(model, x0::AbstractVector{T}, time_step::Real;
         # Evolve perturbation vectors
         Q_evolved = zeros(T, dim, dim)
         for j in 1:dim
-            Q_evolved[:, j], _ = rk4_step(model, 0.0, x + Q[:, j] * 1e-8, time_step, dt)
+            Q_evolved[:, j], _ = rk4_step(model, 0.0, x + Q[:, j] * PERTURBATION_SIZE, time_step, dt)
             Q_evolved[:, j] = Q_evolved[:, j] - x_new
         end
         

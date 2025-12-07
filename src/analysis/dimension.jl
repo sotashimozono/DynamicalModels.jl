@@ -1,3 +1,5 @@
+const NUMERICAL_EPSILON = 1e-10
+
 """
     correlation_dimension(points; r_min=0.01, r_max=10.0, n_r=50)
 
@@ -51,10 +53,10 @@ function correlation_dimension(points::Vector{Vector{T}};
     # Estimate dimension from linear region
     # Use middle portion of the curve to avoid edge effects
     log_r = log.(radii)
-    log_C = log.(C .+ 1e-10)  # Add small value to avoid log(0)
+    log_C = log.(C .+ NUMERICAL_EPSILON)  # Add small value to avoid log(0)
     
     # Find linear region (middle 60% of data where C > 0)
-    valid_indices = findall(C .> 1e-10)
+    valid_indices = findall(C .> NUMERICAL_EPSILON)
     if length(valid_indices) < 2
         return radii, C, NaN
     end
