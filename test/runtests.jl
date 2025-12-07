@@ -1,22 +1,4 @@
-
 ENV["GKSwstype"] = "100"
-
-const FIG_BASE = joinpath(@__DIR__, "../figures")
-const FIG_ODE = joinpath(FIG_BASE, "ode_solver")
-const FIG_MAP = joinpath(FIG_BASE, "map_solver")
-const FIG_LAT = joinpath(FIG_BASE, "lattice")
-const FIG_RANDOM = joinpath(FIG_BASE, "random")
-
-const PATHS = Dict(
-    # ODEs
-    :vanderpol => joinpath(FIG_ODE, "vanderpol"),
-    :hodgkin_huxley => joinpath(FIG_ODE, "hodgkin_huxley"),
-    :lorenz => joinpath(FIG_ODE, "lorenz"),
-    :rossler => joinpath(FIG_ODE, "rossler"),
-    # maps
-    :henon => joinpath(FIG_MAP, "henon_map"),
-)
-mkpath.(values(PATHS))
 
 using DynamicalModels, Test, Plots
 using FFTW, ForwardDiff
