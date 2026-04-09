@@ -1,0 +1,20 @@
+# Pattern 1: plain path_keys
+# σ と β は固定値。ρ だけを sweep してカオス転移を追う。
+# path_keys に plain leaf name "rho" を使うので、パスは "rho24.74/" のように短くなる。
+
+[study]
+project_name  = "lorenz_rho_sweep"
+total_samples = 3
+outdir        = "out"
+
+[datavault]
+path_keys = ["rho"]   # plain: sub-table を使っていても dotted 不要
+
+[[paramsets]]
+
+[paramsets.system]
+sigma = 10.0                                       # 固定
+rho   = [10.0, 20.0, 24.0, 24.74, 28.0, 35.0]    # sweep: 固定点→カオス転移
+beta  = 2.6667                                      # 固定
+dt    = 0.01
+t_end = 50.0

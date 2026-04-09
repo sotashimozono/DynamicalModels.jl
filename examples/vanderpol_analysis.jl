@@ -18,7 +18,7 @@ println("1. Autonomous System (No Forcing)")
 println("-"^60)
 
 # Standard Van der Pol with moderate damping
-model = VanDerPol(ϵ=1.0, F=0.0, ω=0.0)
+model = VanDerPol(; ϵ=1.0, F=0.0, ω=0.0)
 println("\nModel parameters:")
 println("  ϵ (damping) = $(model.ϵ)")
 println("  F (forcing amplitude) = $(model.F)")
@@ -34,12 +34,12 @@ println("Largest Lyapunov exponent: ", λ_max)
 
 println("\nInterpretation:")
 if abs(λ_max) < 0.1
-    println("  ✓ λ ≈ 0: System exhibits LIMIT CYCLE behavior")
-    println("  - Trajectories converge to a stable periodic orbit")
-    println("  - Neither chaotic nor convergent to fixed point")
+  println("  ✓ λ ≈ 0: System exhibits LIMIT CYCLE behavior")
+  println("  - Trajectories converge to a stable periodic orbit")
+  println("  - Neither chaotic nor convergent to fixed point")
 else
-    println("  Note: λ should be ≈ 0 for limit cycle")
-    println("  (May need more iterations for convergence)")
+  println("  Note: λ should be ≈ 0 for limit cycle")
+  println("  (May need more iterations for convergence)")
 end
 
 println("\n" * "-"^60)
@@ -52,18 +52,18 @@ println()
 ϵ_values = [0.1, 1.0, 5.0, 10.0]
 
 for ϵ in ϵ_values
-    test_model = VanDerPol(ϵ=ϵ)
-    λ = lyapunov_exponent(test_model, x0, 0.1; warmup=500, n_iterations=1000)
-    
-    oscillation_type = if ϵ < 0.5
-        "Nearly sinusoidal"
-    elseif ϵ < 3.0
-        "Moderate nonlinearity"
-    else
-        "Relaxation oscillations"
-    end
-    
-    println("  ϵ = ", ϵ, "\tλ ≈ ", round(λ, digits=4), "\t[", oscillation_type, "]")
+  test_model = VanDerPol(; ϵ=ϵ)
+  λ = lyapunov_exponent(test_model, x0, 0.1; warmup=500, n_iterations=1000)
+
+  oscillation_type = if ϵ < 0.5
+    "Nearly sinusoidal"
+  elseif ϵ < 3.0
+    "Moderate nonlinearity"
+  else
+    "Relaxation oscillations"
+  end
+
+  println("  ϵ = ", ϵ, "\tλ ≈ ", round(λ; digits=4), "\t[", oscillation_type, "]")
 end
 
 println("\nObservations:")
@@ -76,7 +76,7 @@ println("3. Forced Van der Pol Oscillator")
 println("-"^60)
 
 # Forced oscillator
-forced_model = VanDerPol(ϵ=1.0, F=5.0, ω=2.466)
+forced_model = VanDerPol(; ϵ=1.0, F=5.0, ω=2.466)
 println("\nForced oscillator parameters:")
 println("  ϵ = $(forced_model.ϵ)")
 println("  F = $(forced_model.F)")

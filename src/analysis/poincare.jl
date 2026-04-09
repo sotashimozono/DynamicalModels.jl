@@ -25,64 +25,67 @@ plane_point = [0.0, 0.0, 27.0]
 section = poincare_section(model, x0, plane_normal, plane_point, 1000.0)
 ```
 """
-function poincare_section(model, x0::AbstractVector{T}, 
-                         plane_normal::AbstractVector{T}, 
-                         plane_point::AbstractVector{T}, 
-                         t_max::Real; 
-                         dt=0.01, 
-                         direction=:both) where T
-    # Normalize the plane normal
-    n = plane_normal / norm(plane_normal)
-    
-    section_points = Vector{Vector{T}}()
-    
-    t = 0.0
-    x = copy(x0)
-    
-    # Calculate signed distance from plane
-    dist_prev = dot(x - plane_point, n)
-    
-    n_steps = ceil(Int, t_max / dt)
-    
-    for _ in 1:n_steps
-        # RK4 step
-        k1 = model(t, x)
-        k2 = model(t + dt/2, x + dt/2 * k1)
-        k3 = model(t + dt/2, x + dt/2 * k2)
-        k4 = model(t + dt, x + dt * k3)
-        
-        x_new = x + (dt/6) * (k1 + 2*k2 + 2*k3 + k4)
-        t += dt
-        
-        # Check if crossed the plane
-        dist_new = dot(x_new - plane_point, n)
-        
-        if dist_prev * dist_new < 0  # Sign changed, crossed the plane
-            # Determine crossing direction
-            crossing_positive = dist_new > dist_prev
-            
-            record = false
-            if direction == :both
-                record = true
-            elseif direction == :positive && crossing_positive
-                record = true
-            elseif direction == :negative && !crossing_positive
-                record = true
-            end
-            
-            if record
-                # Linear interpolation to find intersection point
-                α = abs(dist_prev) / (abs(dist_prev) + abs(dist_new))
-                x_section = x + α * (x_new - x)
-                push!(section_points, x_section)
-            end
-        end
-        
-        x = x_new
-        dist_prev = dist_new
+function poincare_section(
+  model,
+  x0::AbstractVector{T},
+  plane_normal::AbstractVector{T},
+  plane_point::AbstractVector{T},
+  t_max::Real;
+  dt=0.01,
+  direction=:both,
+) where {T}
+  # Normalize the plane normal
+  n = plane_normal / norm(plane_normal)
+
+  section_points = Vector{Vector{T}}()
+
+  t = 0.0
+  x = copy(x0)
+
+  # Calculate signed distance from plane
+  dist_prev = dot(x - plane_point, n)
+
+  n_steps = ceil(Int, t_max / dt)
+
+  for _ in 1:n_steps
+    # RK4 step
+    k1 = model(t, x)
+    k2 = model(t + dt/2, x + dt/2 * k1)
+    k3 = model(t + dt/2, x + dt/2 * k2)
+    k4 = model(t + dt, x + dt * k3)
+
+    x_new = x + (dt/6) * (k1 + 2*k2 + 2*k3 + k4)
+    t += dt
+
+    # Check if crossed the plane
+    dist_new = dot(x_new - plane_point, n)
+
+    if dist_prev * dist_new < 0  # Sign changed, crossed the plane
+      # Determine crossing direction
+      crossing_positive = dist_new > dist_prev
+
+      record = false
+      if direction == :both
+        record = true
+      elseif direction == :positive && crossing_positive
+        record = true
+      elseif direction == :negative && !crossing_positive
+        record = true
+      end
+
+      if record
+        # Linear interpolation to find intersection point
+        α = abs(dist_prev) / (abs(dist_prev) + abs(dist_new))
+        x_section = x + α * (x_new - x)
+        push!(section_points, x_section)
+      end
     end
-    
-    return section_points
+
+    x = x_new
+    dist_prev = dist_new
+  end
+
+  return section_points
 end
 export poincare_section
 
@@ -114,25 +117,29 @@ plane_point = [0.0, 0.0, 0.0]
 x_coords, z_coords = poincare_map_2d(model, x0, (1, 3), plane_normal, plane_point, 1000.0)
 ```
 """
-function poincare_map_2d(model, x0::AbstractVector{T}, 
-                        coord_indices::Tuple{Int, Int},
-                        plane_normal::AbstractVector{T}, 
-                        plane_point::AbstractVector{T}, 
-                        t_max::Real; 
-                        dt=0.01, 
-                        direction=:both) where T
-    section_points = poincare_section(model, x0, plane_normal, plane_point, t_max; 
-                                     dt=dt, direction=direction)
-    
-    i1, i2 = coord_indices
-    
-    if isempty(section_points)
-        return T[], T[]
-    end
-    
-    x_coords = [p[i1] for p in section_points]
-    y_coords = [p[i2] for p in section_points]
-    
-    return x_coords, y_coords
+function poincare_map_2d(
+  model,
+  x0::AbstractVector{T},
+  coord_indices::Tuple{Int,Int},
+  plane_normal::AbstractVector{T},
+  plane_point::AbstractVector{T},
+  t_max::Real;
+  dt=0.01,
+  direction=:both,
+) where {T}
+  section_points = poincare_section(
+    model, x0, plane_normal, plane_point, t_max; dt=dt, direction=direction
+  )
+
+  i1, i2 = coord_indices
+
+  if isempty(section_points)
+    return T[], T[]
+  end
+
+  x_coords = [p[i1] for p in section_points]
+  y_coords = [p[i2] for p in section_points]
+
+  return x_coords, y_coords
 end
 export poincare_map_2d

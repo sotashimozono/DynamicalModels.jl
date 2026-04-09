@@ -1,0 +1,13 @@
+# Pattern 3 (child): カオス領域を追加
+# [base] inherit で default.toml のパラメータ空間を引き継ぎ、カオス領域の点を追加する。
+# 展開後のパラメータ空間 = default の4点 ∪ ここの5点 = 計9点
+
+[base]
+inherit = "default.toml"
+
+[[paramsets]]
+
+[paramsets.system]
+r      = [3.7, 3.8, 3.9, 3.95, 4.0]   # period-doubling cascade → カオス
+n_iter = 2000
+n_skip = 1000
