@@ -7,23 +7,25 @@ using LinearAlgebra, Statistics, Random
 const dirs = ["model", "solver", "analysis", "integration"]
 
 @testset "tests" begin
-    test_args = copy(ARGS)
-    println("Passed arguments ARGS = $(test_args) to tests.")
-    @time for dir in dirs
-        dirpath = joinpath(@__DIR__, dir)
-        println("\nTest $(dirpath)")
-        # Find all files named test_*.jl in the directory and include them.
-        files = sort(filter(f -> startswith(f, "test_") && endswith(f, ".jl"), readdir(dirpath)))
-        if isempty(files)
-            println("  No test files found in $(dirpath).")
-        else
-            for f in files
-                filepath = joinpath(dirpath, f)
-                @time begin
-                    println("  Including $(filepath)")
-                    include(filepath)
-                end
-            end
+  test_args = copy(ARGS)
+  println("Passed arguments ARGS = $(test_args) to tests.")
+  @time for dir in dirs
+    dirpath = joinpath(@__DIR__, dir)
+    println("\nTest $(dirpath)")
+    # Find all files named test_*.jl in the directory and include them.
+    files = sort(
+      filter(f -> startswith(f, "test_") && endswith(f, ".jl"), readdir(dirpath))
+    )
+    if isempty(files)
+      println("  No test files found in $(dirpath).")
+    else
+      for f in files
+        filepath = joinpath(dirpath, f)
+        @time begin
+          println("  Including $(filepath)")
+          include(filepath)
         end
+      end
     end
+  end
 end

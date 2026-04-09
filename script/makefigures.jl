@@ -17,16 +17,16 @@ const dirs = ["solver", "model"]
 test_args = copy(ARGS)
 println("Passed arguments ARGS = $(test_args) to tests.")
 @time for dir in dirs
-    dirpath = joinpath(@__DIR__, dir)
-    println("\nTest $(dirpath)")
-    files = sort(filter(f -> startswith(f, "fig_") && endswith(f, ".jl"), readdir(dirpath)))
-    if isempty(files)
-        println("  No figure files found in $(dirpath).")
-    else
-        for f in files
-            filepath = joinpath(dirpath, f)
-            println("  Including $(filepath)")
-            include(filepath)
-        end
+  dirpath = joinpath(@__DIR__, dir)
+  println("\nTest $(dirpath)")
+  files = sort(filter(f -> startswith(f, "fig_") && endswith(f, ".jl"), readdir(dirpath)))
+  if isempty(files)
+    println("  No figure files found in $(dirpath).")
+  else
+    for f in files
+      filepath = joinpath(dirpath, f)
+      println("  Including $(filepath)")
+      include(filepath)
     end
+  end
 end
