@@ -18,11 +18,6 @@ jobs:
         with:
           version: '1'
 
-      - name: Clone DataVault.jl and ParamIO.jl (sibling repos)
-        run: |
-          git clone https://github.com/sotashimozono/DataVault.jl.git $GITHUB_WORKSPACE/../../DataVault.jl
-          git clone https://github.com/sotashimozono/ParamIO.jl.git    $GITHUB_WORKSPACE/../../ParamIO.jl
-
       - name: Install dependencies
         run: julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
 

@@ -4,3 +4,4 @@ docs/src/assets/
 docs/src/tutorials/*.md
 *.jld2
 Manifest.toml
+docs/Manifest.toml
