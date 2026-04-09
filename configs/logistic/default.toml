@@ -1,0 +1,17 @@
+# Pattern 3 (base): 規則的ダイナミクス領域
+# このファイル単体で実行可能。chaos.toml に inherit される。
+
+[study]
+project_name  = "logistic_bifurcation"
+total_samples = 1
+outdir        = "out"
+
+[datavault]
+path_keys = ["r"]
+
+[[paramsets]]
+
+[paramsets.system]
+r      = [2.0, 3.0, 3.2, 3.5]   # 固定点 → period-2 → period-4
+n_iter = 2000
+n_skip = 1000                     # transient を捨てる

@@ -9,9 +9,9 @@ It can be passed to `map_solver` in the form of `f(x)`.
 @kwdef struct LogisticMap <: AbstractMap{Float64}
     r::Float64 = 3.5
 end
-function (params::LogisticMap)(x)
+function (params::LogisticMap)(n, x)
     r = params.r
-    return r * x * (1 - x)
+    return [r * x[1] * (1 - x[1])]
 end
 export LogisticMap
 """

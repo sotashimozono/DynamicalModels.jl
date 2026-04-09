@@ -1,0 +1,35 @@
+# Pattern 2: 2ブロック union (非デカルト)
+# ロスラー方程式の2つの分岐経路を別々に探索する。
+# Block 1: a を変えて period-doubling を追う (c=14.0 固定)
+# Block 2: c を変えてスパイラル→スクリュー型転移を追う (a=0.2 固定)
+#
+# なぜ union か: 全デカルト積 (5×5=25点) は意味のない組み合わせが多い。
+# 各分岐経路に沿った 5+5=10 点だけを計算する。
+
+[study]
+project_name  = "rossler_bifurcation"
+total_samples = 2
+outdir        = "out"
+
+[datavault]
+path_keys = ["a", "b", "c"]
+
+# --- Block 1: period-doubling route (a sweep, c fixed) ---
+[[paramsets]]
+
+[paramsets.system]
+a     = [0.1, 0.2, 0.3, 0.35, 0.4]
+b     = 0.1
+c     = 14.0
+dt    = 0.01
+t_end = 200.0
+
+# --- Block 2: spiral→screw transition (c sweep, a fixed) ---
+[[paramsets]]
+
+[paramsets.system]
+a     = 0.2
+b     = 0.2
+c     = [2.0, 3.5, 4.5, 5.7, 8.5]
+dt    = 0.01
+t_end = 200.0

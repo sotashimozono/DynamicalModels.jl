@@ -1,10 +1,10 @@
 ENV["GKSwstype"] = "100"
 
-using DynamicalModels, Test, Plots
+using DynamicalModels, DataVault, ParamIO, Test, Plots
 using FFTW, ForwardDiff
 using LinearAlgebra, Statistics, Random
 
-const dirs = ["model", "solver", "analysis"]
+const dirs = ["model", "solver", "analysis", "integration"]
 
 @testset "tests" begin
     test_args = copy(ARGS)

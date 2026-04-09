@@ -1,0 +1,6 @@
+out/
+docs/build/
+docs/src/assets/
+docs/src/tutorials/*.md
+*.jld2
+Manifest.toml
