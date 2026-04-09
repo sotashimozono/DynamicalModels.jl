@@ -4,28 +4,21 @@ requirejs.config({
     'highlight-julia': 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min',
     'headroom': 'https://cdnjs.cloudflare.com/ajax/libs/headroom/0.12.0/headroom.min',
     'jqueryui': 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min',
-    'katex-auto-render': 'https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/contrib/auto-render.min',
     'jquery': 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min',
     'headroom-jquery': 'https://cdnjs.cloudflare.com/ajax/libs/headroom/0.12.0/jQuery.headroom.min',
-    'katex': 'https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min',
     'highlight': 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min',
     'highlight-julia-repl': 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min',
   },
   shim: {
-  "highlight-julia": {
-    "deps": [
-      "highlight"
-    ]
-  },
-  "katex-auto-render": {
-    "deps": [
-      "katex"
-    ]
-  },
   "headroom-jquery": {
     "deps": [
       "jquery",
       "headroom"
+    ]
+  },
+  "highlight-julia": {
+    "deps": [
+      "highlight"
     ]
   },
   "highlight-julia-repl": {
@@ -35,31 +28,39 @@ requirejs.config({
   }
 }});
 ////////////////////////////////////////////////////////////////////////////////
-require(['jquery', 'katex', 'katex-auto-render'], function($, katex, renderMathInElement) {
-$(document).ready(function() {
-  renderMathInElement(
-    document.body,
-    {
-  "delimiters": [
-    {
-      "left": "$",
-      "right": "$",
-      "display": false
-    },
-    {
-      "left": "$$",
-      "right": "$$",
-      "display": true
-    },
-    {
-      "left": "\\[",
-      "right": "\\]",
-      "display": true
-    }
-  ]
-}
-  );
-})
+require([], function() {
+window.MathJax = {
+  "options": {
+    "ignoreHtmlClass": "tex2jax_ignore",
+    "processHtmlClass": "tex2jax_process"
+  },
+  "tex": {
+    "inlineMath": [
+      [
+        "$",
+        "$"
+      ],
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "packages": [
+      "base",
+      "ams",
+      "autoload",
+      "physics"
+    ],
+    "tags": "ams"
+  }
+};
+
+(function () {
+    var script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js';
+    script.async = true;
+    document.head.appendChild(script);
+})();
 
 })
 ////////////////////////////////////////////////////////////////////////////////
@@ -481,6 +482,7 @@ function worker_function(documenterSearchIndex, documenterBaseURL, filters) {
     // find anything if searching for "add!", only for the entire qualification
     tokenize: (string) => {
       const tokens = [];
+      const tokenSet = new Set();
       let remaining = string;
 
       // julia specific patterns
@@ -507,8 +509,9 @@ function worker_function(documenterSearchIndex, documenterBaseURL, filters) {
         let match;
         while ((match = pattern.exec(remaining)) != null) {
           const token = match[0].trim();
-          if (token && !tokens.includes(token)) {
+          if (token && !tokenSet.has(token)) {
             tokens.push(token);
+            tokenSet.add(token);
           }
         }
       }
@@ -518,8 +521,9 @@ function worker_function(documenterSearchIndex, documenterBaseURL, filters) {
         .split(/[\s\-,;()[\]{}]+/)
         .filter((t) => t.trim());
       for (const token of basicTokens) {
-        if (token && !tokens.includes(token)) {
+        if (token && !tokenSet.has(token)) {
           tokens.push(token);
+          tokenSet.add(token);
         }
       }
 
@@ -1308,18 +1312,21 @@ $(document).ready(function () {
     // construct the target URL with the same page path
     var target_url = target_href;
     if (page_path && page_path !== "" && page_path !== "index.html") {
-      // remove trailing slash from target_href if present
-      if (target_url.endsWith("/")) {
-        target_url = target_url.slice(0, -1);
+      // ensure target_href ends with a slash before appending page path
+      if (!target_url.endsWith("/")) {
+        target_url = target_url + "/";
       }
-      target_url = target_url + "/" + page_path;
+      target_url = target_url + page_path;
     }
+
+    // preserve the anchor (hash) from the current page
+    var current_hash = window.location.hash;
 
     // check if the target page exists, fallback to homepage if it doesn't
     fetch(target_url, { method: "HEAD" })
       .then(function (response) {
         if (response.ok) {
-          window.location.href = target_url;
+          window.location.href = target_url + current_hash;
         } else {
           // page doesn't exist in the target version, go to homepage
           window.location.href = target_href;
