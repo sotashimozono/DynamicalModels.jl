@@ -1,30 +1,40 @@
 name = "DynamicalModels"
 uuid = "155b56ea-488f-4a64-96b5-1bbed62c0e47"
-version = "0.3.0"
+version = "0.3."
 authors = ["sotashimozono <shimozono-sota631@g.ecc.u-tokyo.ac.jp>"]
 
 [deps]
-DataVault = "23f5f8f6-b4da-40ee-8c72-c53b6c5de94f"
 FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
 ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
-ParamIO = "938a3ac2-d340-473c-bcf1-88af577e4ccf"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
+# DataVault/ParamIO are only used by the param-sweep tutorial and the integration test, never by
+# src/, so they are test/docs deps — not runtime deps. Kept here as [sources] (neither is registered
+# yet) so the test target and the docs env can still resolve them from git.
 [sources]
 DataVault = {rev = "main", url = "https://github.com/sotashimozono/DataVault.jl.git"}
 ParamIO = {rev = "main", url = "https://github.com/sotashimozono/ParamIO.jl.git"}
 
 [compat]
+DataVault = "0.7"
 FFTW = "1.10.0"
 ForwardDiff = "1.3.0"
 LinearAlgebra = "1.12.0"
 Literate = "2.21.0"
+ParamIO = "0.3"
 Plots = "1.41.2"
 Random = "1.11.0"
 Statistics = "1.11.1"
 Test = "1.11.0"
+
+[extras]
+DataVault = "23f5f8f6-b4da-40ee-8c72-c53b6c5de94f"
+ParamIO = "938a3ac2-d340-473c-bcf1-88af577e4ccf"
+
+[targets]
+test = ["DataVault", "ParamIO"]
