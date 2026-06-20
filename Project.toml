@@ -1,6 +1,6 @@
 name = "DynamicalModels"
 uuid = "155b56ea-488f-4a64-96b5-1bbed62c0e47"
-version = "0.3."
+version = "0.3.1"
 authors = ["sotashimozono <shimozono-sota631@g.ecc.u-tokyo.ac.jp>"]
 
 [deps]
