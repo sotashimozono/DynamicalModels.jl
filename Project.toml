@@ -1,6 +1,6 @@
 name = "DynamicalModels"
 uuid = "155b56ea-488f-4a64-96b5-1bbed62c0e47"
-version = "0.2.1"
+version = "0.3."
 authors = ["sotashimozono <shimozono-sota631@g.ecc.u-tokyo.ac.jp>"]
 
 [deps]
@@ -17,8 +17,8 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 # src/, so they are test/docs deps — not runtime deps. Kept here as [sources] (neither is registered
 # yet) so the test target and the docs env can still resolve them from git.
 [sources]
-DataVault = {url = "https://github.com/sotashimozono/DataVault.jl.git"}
-ParamIO = {url = "https://github.com/sotashimozono/ParamIO.jl.git"}
+DataVault = {rev = "main", url = "https://github.com/sotashimozono/DataVault.jl.git"}
+ParamIO = {rev = "main", url = "https://github.com/sotashimozono/ParamIO.jl.git"}
 
 [compat]
 DataVault = "0.7"

@@ -93,12 +93,27 @@ end
   outdir = mktempdir()
   vault = Vault(joinpath(CONFIGS, "lorenz.toml"); outdir=outdir)
 
+  # v0.3.0 以降は run 階層が path に挟まる: data/{project}/{run}/...
   snapshot_in_out = joinpath(
-    outdir, "data", vault.spec.study.project_name, "config_snapshot.toml"
+    outdir, "data", vault.spec.study.project_name, vault.run, "config_snapshot.toml"
   )
   @test isfile(snapshot_in_out)
 
   # configs/ ディレクトリ内に config_snapshot.toml は生成されない
   snapshot_in_configs = joinpath(CONFIGS, "config_snapshot.toml")
   @test !isfile(snapshot_in_configs)
+end
+
+@testset "data separation: log.toml discovery anchor exists under .datavault/" begin
+  outdir = mktempdir()
+  vault = Vault(joinpath(CONFIGS, "lorenz.toml"); outdir=outdir)
+
+  # v0.3.0 以降は .datavault/{project}/{run}.log.toml が必ず作られる
+  log_path = joinpath(
+    outdir, ".datavault", vault.spec.study.project_name, "$(vault.run).log.toml"
+  )
+  @test isfile(log_path)
+
+  # README.md (削除禁止の警告) も同時に作られる
+  @test isfile(joinpath(outdir, ".datavault", "README.md"))
 end
