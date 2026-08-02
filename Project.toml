@@ -13,12 +13,13 @@ Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
-# DataVault/ParamIO are only used by the param-sweep tutorial and the integration test, never by
-# src/, so they are test/docs deps — not runtime deps. Kept here as [sources] (neither is registered
-# yet) so the test target and the docs env can still resolve them from git.
-[sources]
-DataVault = {rev = "main", url = "https://github.com/sotashimozono/DataVault.jl.git"}
-ParamIO = {rev = "main", url = "https://github.com/sotashimozono/ParamIO.jl.git"}
+[sources.DataVault]
+rev = "main"
+url = "https://github.com/sotashimozono/DataVault.jl.git"
+
+[sources.ParamIO]
+rev = "main"
+url = "https://github.com/sotashimozono/ParamIO.jl.git"
 
 [compat]
 DataVault = "0.7"
@@ -26,7 +27,7 @@ FFTW = "1.10.0"
 ForwardDiff = "1.3.0"
 LinearAlgebra = "1.12.0"
 Literate = "2.21.0"
-ParamIO = "0.3"
+ParamIO = "0.3, 0.4"
 Plots = "1.41.2"
 Random = "1.11.0"
 Statistics = "1.11.1"
