@@ -1,6 +1,6 @@
 name = "DynamicalModels"
 uuid = "155b56ea-488f-4a64-96b5-1bbed62c0e47"
-version = "0.3.2"
+version = "0.3.3"
 authors = ["sotashimozono <shimozono-sota631@g.ecc.u-tokyo.ac.jp>"]
 
 [deps]
@@ -21,6 +21,7 @@ DataVault = {rev = "main", url = "https://github.com/sotashimozono/DataVault.jl.
 ParamIO = {rev = "main", url = "https://github.com/sotashimozono/ParamIO.jl.git"}
 
 [compat]
+TestShards = "0.3"
 DataVault = "0.7"
 FFTW = "1.10.0"
 ForwardDiff = "1.3.0"
@@ -35,6 +36,7 @@ Test = "1.11.0"
 [extras]
 DataVault = "23f5f8f6-b4da-40ee-8c72-c53b6c5de94f"
 ParamIO = "938a3ac2-d340-473c-bcf1-88af577e4ccf"
+TestShards = "acceef1d-f5e0-4fe4-a546-818dc56ce7b2"
 
 [targets]
-test = ["DataVault", "ParamIO"]
+test = ["DataVault", "ParamIO", "TestShards"]

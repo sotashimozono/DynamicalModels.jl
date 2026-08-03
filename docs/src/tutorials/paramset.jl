@@ -46,10 +46,10 @@ rho_vals = Float64[]
 lam_vals = Float64[]
 for key in sort(DataVault.keys(vault_lorenz; status=:done); by=k->k.params["system.rho"])
   ρ = Float64(key.params["system.rho"])
-  ρ ∈ seen && continue;
+  ρ ∈ seen && continue
   push!(seen, ρ)
   d = DataVault.load(vault_lorenz, key)
-  push!(rho_vals, d["rho"]);
+  push!(rho_vals, d["rho"])
   push!(lam_vals, d["lyapunov"])
   @printf(
     "| %5.2f | %12.4f | %-8s |\n", d["rho"], d["lyapunov"], d["lyapunov"] > 0 ? "yes" : "no"
@@ -124,10 +124,10 @@ for key in sort(
 )
   d = DataVault.load(vault_rossler, key)
   t = (round(d["a"]; digits=3), round(d["c"]; digits=3))
-  t ∈ seen_r && continue;
+  t ∈ seen_r && continue
   push!(seen_r, t)
   abs(d["c"] - 14.0) < 0.01 || continue
-  push!(a_vals_r1, d["a"]);
+  push!(a_vals_r1, d["a"])
   push!(lam_vals_r1, d["lyapunov"])
   @printf(
     "| %.2f | %6.3f | %-8s |\n", d["a"], d["lyapunov"], d["lyapunov"] > 0 ? "yes" : "no"
@@ -141,10 +141,10 @@ seen_r2 = Set{Tuple}()
 for key in sort(DataVault.keys(vault_rossler; status=:done); by=k->k.params["system.c"])
   d = DataVault.load(vault_rossler, key)
   t = (round(d["a"]; digits=3), round(d["c"]; digits=3))
-  t ∈ seen_r2 && continue;
+  t ∈ seen_r2 && continue
   push!(seen_r2, t)
   abs(d["a"] - 0.2) < 0.01 && abs(d["c"] - 14.0) > 0.1 || continue
-  push!(c_vals_r2, d["c"]);
+  push!(c_vals_r2, d["c"])
   push!(lam_vals_r2, d["lyapunov"])
   @printf(
     "| %.1f | %6.3f | %-8s |\n", d["c"], d["lyapunov"], d["lyapunov"] > 0 ? "yes" : "no"
@@ -225,7 +225,7 @@ println("|------|-----------------|---------------|")
 seen_l = Set{Float64}()
 for key in sort(DataVault.keys(vault_logistic; status=:done); by=k->k.params["system.r"])
   r = Float64(key.params["system.r"])
-  r ∈ seen_l && continue;
+  r ∈ seen_l && continue
   push!(seen_l, r)
   d = DataVault.load(vault_logistic, key)
   p = d["period"]
@@ -251,7 +251,7 @@ for key in sort(DataVault.keys(vault_logistic; status=:done); by=k->k.params["sy
   r ∈ Set(r_plot) && continue
   d = DataVault.load(vault_logistic, key)
   for v in d["attractor"]
-    push!(r_plot, r);
+    push!(r_plot, r)
     push!(att_plot, v)
   end
 end
