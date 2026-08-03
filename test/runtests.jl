@@ -19,10 +19,10 @@ using LinearAlgebra, Statistics, Random
 # A bare `Pkg.test()` with nothing set in the environment runs all of it, in this order. Run one
 # shard locally with `TESTSHARDS_ID=s2 TESTSHARDS_N=4 julia --project -e 'using Pkg; Pkg.test()'`.
 TestShards.@shard begin
-    for (dir, _, files) in sort!(collect(walkdir(@__DIR__)))
-        for f in sort(files)
-            startswith(f, "test_") && endswith(f, ".jl") || continue
-            include(joinpath(dir, f))
-        end
+  for (dir, _, files) in sort!(collect(walkdir(@__DIR__)))
+    for f in sort(files)
+      startswith(f, "test_") && endswith(f, ".jl") || continue
+      include(joinpath(dir, f))
     end
+  end
 end
