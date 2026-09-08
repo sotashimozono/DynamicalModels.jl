@@ -1,0 +1,7 @@
+analysis/test_analysis.jl	3.61
+integration/test_separation.jl	10.845
+model/test_henonmap.jl	1.579
+model/test_lorenz.jl	1.956
+model/test_rossler.jl	1.185
+model/test_vanderpol.jl	0.904
+solver/test_odesolver.jl	2.917
