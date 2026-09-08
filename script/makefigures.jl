@@ -1,7 +1,9 @@
 ENV["GKSwstype"] = "100"
 
 using Pkg
-Pkg.activate(joinpath(@__DIR__, ".."))
+# The docs environment, not the package's: this script writes into docs/src/assets, and the
+# package itself no longer carries Plots/FFTW/Random/Statistics as dependencies.
+Pkg.activate(joinpath(@__DIR__, "..", "docs"))
 
 using DynamicalModels
 using Plots, LinearAlgebra, Random, Statistics, FFTW

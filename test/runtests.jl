@@ -1,6 +1,7 @@
 ENV["GKSwstype"] = "100"
 
 using DynamicalModels, DataVault, ParamIO, Test, Plots
+using TestShards          # `@shard` below is qualified to it; without this the suite does not load
 using FFTW, ForwardDiff
 using LinearAlgebra, Statistics, Random
 
