@@ -6,24 +6,16 @@ authors = ["sotashimozono <shimozono-sota631@g.ecc.u-tokyo.ac.jp>"]
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
-# The same reasoning that put DataVault/ParamIO below, applied to the rest: `src/` uses
-# LinearAlgebra and nothing else. FFTW, ForwardDiff, Plots, Random and Statistics are reached only
-# from `test/` and `script/`, and Literate only from `docs/make.jl` — so `using DynamicalModels` no
-# longer drags a plotting backend and an FFT library into every environment that wants a model.
-# `Literate` is gone entirely rather than moved: `docs/Project.toml` already declares it.
-#
-# DataVault/ParamIO are kept here as [sources] (neither is registered yet) so the test target and
-# the docs env can still resolve them from git.
-[sources]
-DataVault = {rev = "main", url = "https://github.com/sotashimozono/DataVault.jl.git"}
-ParamIO = {rev = "main", url = "https://github.com/sotashimozono/ParamIO.jl.git"}
+[sources.DataVault]
+rev = "main"
+url = "https://github.com/sotashimozono/DataVault.jl.git"
+
+[sources.ParamIO]
+rev = "main"
+url = "https://github.com/sotashimozono/ParamIO.jl.git"
 
 [compat]
-TestShards = "0.3"
-# These two are pinned by [sources] to `main`, so their bound has to follow where main went;
-# ParamIO reached 0.4 and CI has failed on `empty intersection between ParamIO@0.4.x and project
-# compatibility 0.3` since 2026-08-03. A `rev = "main"` source and a fixed compat bound rot apart.
-DataVault = "0.7"
+DataVault = "0.7, 0.8"
 FFTW = "1.10.0"
 ForwardDiff = "1.3.0"
 LinearAlgebra = "1.12.0"
@@ -32,6 +24,7 @@ Plots = "1.41.2"
 Random = "1.11.0"
 Statistics = "1.11.1"
 Test = "1.11.0"
+TestShards = "0.3"
 
 [extras]
 DataVault = "23f5f8f6-b4da-40ee-8c72-c53b6c5de94f"
@@ -45,14 +38,4 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 TestShards = "acceef1d-f5e0-4fe4-a546-818dc56ce7b2"
 
 [targets]
-test = [
-    "DataVault",
-    "FFTW",
-    "ForwardDiff",
-    "ParamIO",
-    "Plots",
-    "Random",
-    "Statistics",
-    "Test",
-    "TestShards",
-]
+test = ["DataVault", "FFTW", "ForwardDiff", "ParamIO", "Plots", "Random", "Statistics", "Test", "TestShards"]
